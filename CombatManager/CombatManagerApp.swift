@@ -12,7 +12,9 @@ import SwiftData
 struct CombatManagerApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Armor.self,
+            PlayerCharacter.self,
+            HitPoints.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

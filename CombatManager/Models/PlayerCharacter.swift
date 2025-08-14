@@ -1,0 +1,38 @@
+//
+//  Character.swift
+//  CombatManager
+//
+//  Created by mac on 8/13/25.
+//
+
+import Foundation
+import SwiftUI
+import SwiftData
+
+@Model
+final class PlayerCharacter {
+    var health: HitPoints
+    var armor: Armor
+    var saves: Saves
+    var notes: [String]
+    
+    init(health: HitPoints, armor: Armor, saves: Saves, notes: [String]) {
+        self.health = health
+        self.armor = armor
+        self.saves = saves
+        self.notes = notes
+    }
+}
+
+protocol Previewable {}
+
+extension PlayerCharacter: Previewable {
+    static func mock(
+        health: HitPoints = HitPoints.mock(),
+        armor: Armor = Armor.mock(),
+        saves: Saves = Saves.mock(),
+        notes: [String] = ["This is a test character", "Is Blessed"]
+    ) -> PlayerCharacter {
+        PlayerCharacter(health: health, armor: armor, saves: saves, notes: notes)
+    }
+}

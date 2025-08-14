@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0407AE8E2E4CCE4200325366 /* DependencyInjection in Frameworks */ = {isa = PBXBuildFile; productRef = 0407AE8D2E4CCE4200325366 /* DependencyInjection */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		0407AE702E4CCDDD00325366 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0407AE8E2E4CCE4200325366 /* DependencyInjection in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = CombatManager;
 			packageProductDependencies = (
+				0407AE8D2E4CCE4200325366 /* DependencyInjection */,
 			);
 			productName = CombatManager;
 			productReference = 0407AE602E4CCDDB00325366 /* CombatManager.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 0407AE572E4CCDDB00325366;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0407AE8C2E4CCE4100325366 /* XCLocalSwiftPackageReference "../DependencyInjection" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0407AE612E4CCDDB00325366 /* Products */;
 			projectDirPath = "";
@@ -578,6 +587,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0407AE8C2E4CCE4100325366 /* XCLocalSwiftPackageReference "../DependencyInjection" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../DependencyInjection;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0407AE8D2E4CCE4200325366 /* DependencyInjection */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DependencyInjection;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0407AE582E4CCDDB00325366 /* Project object */;
 }
