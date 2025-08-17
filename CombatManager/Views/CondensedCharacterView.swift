@@ -14,11 +14,14 @@ struct CondensedCharacterView: View {
     
     var body: some View {
         VStack {
-//            Image()
-//                .padding(24)
-//                .glassEffect()
-            
-            EmptyView()
+            HStack {
+                //            Image()
+                //                .padding(24)
+                //                .glassEffect()
+                            
+                Text(character.name)
+                    .font(.title)
+            }
             Spacer()
             
             HStack {
