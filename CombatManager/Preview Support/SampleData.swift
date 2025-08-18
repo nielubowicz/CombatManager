@@ -1,11 +1,10 @@
 //
-//  PreviewData.swift
+//  SampleData.swift
 //  CombatManager
 //
-//  Created by mac on 8/13/25.
+//  Created by mac on 8/17/25.
 //
 
-struct PreviewData {}
 
 import SwiftData
 
@@ -21,10 +20,14 @@ class SampleData {
         modelContainer.mainContext
     }
 
-
     private init() {
         let schema = Schema([
+            Armor.self,
+            Encounter.self,
+            HitPoints.self,
+            InitiativeOrder.self,
             PlayerCharacter.self,
+            Saves.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 
@@ -47,5 +50,8 @@ class SampleData {
         for character in [PlayerCharacter.mock(), PlayerCharacter.mock(), PlayerCharacter.mock()] {
             context.insert(character)
         }
+        
+        let encounter = Encounter.mock()
+        context.insert(encounter)
     }
 }

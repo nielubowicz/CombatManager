@@ -21,6 +21,7 @@ struct CondensedCharacterView: View {
                             
                 Text(character.name)
                     .font(.title)
+                    .padding()
             }
             Spacer()
             
@@ -38,9 +39,7 @@ struct CondensedCharacterView: View {
                     }
                 }
                 .padding()
-                .overlay(alignment: .topTrailing) {
-                    Image(systemName: "heart")
-                }
+                .glassEffect()
                 Spacer()
                 HStack {
                     Button {
@@ -51,6 +50,7 @@ struct CondensedCharacterView: View {
                             .overlay(alignment: .topTrailing) {
                                 Image(systemName: "brain")
                             }
+                            .glassEffect()
                     }
                     Button {
                         
@@ -60,6 +60,7 @@ struct CondensedCharacterView: View {
                             .overlay(alignment: .topTrailing) {
                                 Image(systemName: "shield.slash")
                             }
+                            .glassEffect()
                     }
                     Button {
                         
@@ -69,6 +70,7 @@ struct CondensedCharacterView: View {
                             .overlay(alignment: .topTrailing) {
                                 Image(systemName: "wind")
                             }
+                            .glassEffect()
                     }
                     
                 }
@@ -81,6 +83,7 @@ struct CondensedCharacterView: View {
                         .overlay(alignment: .topTrailing) {
                             Image(systemName: "shield")
                         }
+                        .glassEffect()
                 }
             }
             
@@ -105,7 +108,7 @@ struct CondensedCharacterView: View {
                 .stroke(.red, style: StrokeStyle(lineWidth: 4))
         }
         .padding()
-        
+
     }
 }
 

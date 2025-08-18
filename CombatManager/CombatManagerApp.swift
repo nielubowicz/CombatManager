@@ -13,8 +13,11 @@ struct CombatManagerApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Armor.self,
+            Encounter.self,
+            HitPoints.self,
+            InitiativeOrder.self,
             PlayerCharacter.self,
-            HitPoints.self
+            Saves.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

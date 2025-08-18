@@ -12,9 +12,7 @@ final class Saves {
     var will: Int
     var fortitude: Int
     var reflex: Int
-    
-//    @Relationship(deleteRule: .cascade)
-    
+       
     init(will: Int, fortitude: Int, reflex: Int) {
         self.will = will
         self.fortitude = fortitude
