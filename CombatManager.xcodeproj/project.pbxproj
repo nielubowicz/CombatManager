@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0407AE8E2E4CCE4200325366 /* DependencyInjection in Frameworks */ = {isa = PBXBuildFile; productRef = 0407AE8D2E4CCE4200325366 /* DependencyInjection */; };
+		042DACE22E54CF3100FB63B8 /* DependencyInjection in Frameworks */ = {isa = PBXBuildFile; productRef = 042DACE12E54CF3100FB63B8 /* DependencyInjection */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0407AE8E2E4CCE4200325366 /* DependencyInjection in Frameworks */,
+				042DACE22E54CF3100FB63B8 /* DependencyInjection in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 			name = CombatManager;
 			packageProductDependencies = (
 				0407AE8D2E4CCE4200325366 /* DependencyInjection */,
+				042DACE12E54CF3100FB63B8 /* DependencyInjection */,
 			);
 			productName = CombatManager;
 			productReference = 0407AE602E4CCDDB00325366 /* CombatManager.app */;
@@ -202,7 +205,7 @@
 			mainGroup = 0407AE572E4CCDDB00325366;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				0407AE8C2E4CCE4100325366 /* XCLocalSwiftPackageReference "../DependencyInjection" */,
+				042DACE02E54CF3100FB63B8 /* XCRemoteSwiftPackageReference "dependencyInjection" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0407AE612E4CCDDB00325366 /* Products */;
@@ -588,16 +591,25 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		0407AE8C2E4CCE4100325366 /* XCLocalSwiftPackageReference "../DependencyInjection" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../DependencyInjection;
+/* Begin XCRemoteSwiftPackageReference section */
+		042DACE02E54CF3100FB63B8 /* XCRemoteSwiftPackageReference "dependencyInjection" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nielubowicz/dependencyInjection";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		0407AE8D2E4CCE4200325366 /* DependencyInjection */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = DependencyInjection;
+		};
+		042DACE12E54CF3100FB63B8 /* DependencyInjection */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 042DACE02E54CF3100FB63B8 /* XCRemoteSwiftPackageReference "dependencyInjection" */;
 			productName = DependencyInjection;
 		};
 /* End XCSwiftPackageProductDependency section */
