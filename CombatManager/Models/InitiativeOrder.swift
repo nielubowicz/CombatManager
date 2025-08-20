@@ -20,7 +20,16 @@ final class InitiativeOrder {
 
 extension InitiativeOrder: Comparable {
     static func < (lhs: InitiativeOrder, rhs: InitiativeOrder) -> Bool {
-        lhs.initiative < rhs.initiative
+        // Initiative order is determined first by Initiative score (lhs < rhs)
+        // and then, if the scores are equal, comparing the DEX modifier (lhs < rhs)
+        // [here, Reflex save is used as a stand-in for DEX until such time
+        // as PlayerCharacter's contain attribute scores.]
+        // NOTE: The official 5e rules say that players should decide how to break
+        // initiative ties between players, GM to decide between GM-controlled characters,
+        // and GM decides between player and GM-controlled characters.
+        // In this case, it may be easier to just adjust the initiative score per character!
+        lhs.initiative < rhs.initiative ||
+        (lhs.initiative == rhs.initiative ? lhs.character.saves.reflex < rhs.character.saves.reflex : false)
     }
 }
 
