@@ -23,16 +23,20 @@ struct CombatEncounter: View {
                     CondensedCharacterView(character: initiativeOrder.character)
                 }
             }
-            // TODO: Support moving manually??
-            // I'm not sure there's a need, unless someone holds their turn
-            // oh yes that's the use case for it.
-            // TODO: Definitely support moving manually
-//            .onMove { from, to in
-//                print("Move \(from) to \(to)")
-//            }
+            .onMove { from, to in
+                viewModel.encounter.initiative[from.first!].initiative = viewModel.encounter.initiative[to].initiative - 1
+                do {
+                    try modelContext.save()
+                } catch {
+                    print(error)
+                }
+            }
         }
         .navigationTitle(viewModel.title)
         .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                EditButton()
+            }
             ToolbarItem(placement: .bottomBar) {
                 Button {
                     withAnimation {
@@ -59,37 +63,23 @@ struct CombatEncounter: View {
 }
 
 #Preview {
+    let context = SampleData.shared.modelContainer.mainContext
+    let predicate = #Predicate<Encounter> { $0.name == "Encounter" }
+    let descriptor = FetchDescriptor(predicate: predicate)
+    let encounters = try! context.fetch(descriptor)
     CombatEncounter(
-        viewModel: CombatEncounterViewModel(encounter: Encounter.mock())
+        viewModel: CombatEncounterViewModel(encounter: encounters.first!)
     )
-    .modelContainer(SampleData.shared.modelContainer)
+        .modelContainer(SampleData.shared.modelContainer)
 }
 
 #Preview("contested initiative") {
+    let context = SampleData.shared.modelContainer.mainContext
+    let encounters = try! context.fetch(
+        FetchDescriptor(predicate: #Predicate<Encounter> { $0.name == "Contested Initiative Encounter" })
+    )
     CombatEncounter(
-        viewModel: CombatEncounterViewModel(
-            encounter: Encounter.mock(
-                initiative: [
-                    InitiativeOrder.mock(
-                        character: PlayerCharacter.mock(name: "Middle", saves: Saves(will: 10, fortitude: 10, reflex: 10)),
-                        initiative: 10
-                    ),
-                    InitiativeOrder.mock(
-                        character: PlayerCharacter.mock(
-                            name: "Lasty",
-                            saves: Saves(will: 10, fortitude: 10, reflex: 9)
-                        ),
-                        initiative: 10
-                    ),
-                    InitiativeOrder.mock(
-                        character: PlayerCharacter.mock(
-                            name: "Firsty",
-                            saves: Saves(will: 10, fortitude: 10, reflex: 12)
-                        ),
-                        initiative: 10
-                    )]
-            )
-        )
+        viewModel: CombatEncounterViewModel(encounter: encounters.first!)
     )
     .modelContainer(SampleData.shared.modelContainer)
 }

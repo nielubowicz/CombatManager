@@ -9,7 +9,7 @@ import SwiftData
 
 @Model
 final class Encounter {
-    var name: String
+    @Attribute(.unique) var name: String
     var initiative: [InitiativeOrder] = []
 
     init(name: String, initiative: [InitiativeOrder]) {

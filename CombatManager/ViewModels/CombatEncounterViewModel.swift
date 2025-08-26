@@ -5,9 +5,12 @@
 //  Created by mac on 8/20/25.
 //
 
-internal import Combine
+import SwiftUI
+import Combine
 
 class CombatEncounterViewModel: ObservableObject {
+    @Environment(\.modelContext) var modelContext
+    
     var encounter: Encounter
     @Published var currentIndex = 0
     

@@ -17,8 +17,6 @@ final class PlayerCharacter {
     var saves: Saves
     var notes: [String]
     
-    var encounters: [Encounter] = []
-    
     init(
         name: String,
         health: HitPoints,
