@@ -14,10 +14,17 @@ struct EncounterList: View {
     @Query var encounters: [Encounter]
     
     var body: some View {
-        List(encounters) { encounter in
-            HStack {
-                Text(encounter.name)
-                Text(encounter.initiative.sorted(by: >).prefix(3).map{ $0.character.name }.joined(separator: ", "))
+        NavigationStack {
+            List(encounters) { encounter in
+                NavigationLink {
+                    CombatEncounter(encounter: encounter)
+                } label: {
+                    HStack {
+                        Text(encounter.name)
+                            .font(.headline)
+                        Text(encounter.initiative.prefix(3).map{ $0.character.name }.joined(separator: ", "))
+                    }
+                }
             }
         }
     }
@@ -25,5 +32,5 @@ struct EncounterList: View {
 
 #Preview {
     EncounterList()
-        .modelContext(SampleData.shared.context)
+        .modelContainer(SampleData.shared.modelContainer)
 }

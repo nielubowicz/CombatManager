@@ -2,37 +2,41 @@
 //  CombatEncounterViewModel.swift
 //  CombatManager
 //
-//  Created by mac on 8/20/25.
+//  Created by mac on 8/26/25.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 class CombatEncounterViewModel: ObservableObject {
-    @Environment(\.modelContext) var modelContext
+    @Bindable var encounter: Encounter
+    @Published var currentInitiativeOrder: [InitiativeOrder]
     
-    var encounter: Encounter
-    @Published var currentIndex = 0
-    
-    init(encounter: Encounter, currentIndex: Int = 0) {
+    init(encounter: Encounter) {
         self.encounter = encounter
-        self.currentIndex = currentIndex
-    }
-    
-    var title: String {
-        encounter.name
-    }
-    
-    var currentInitiativeOrder: [InitiativeOrder] {
-        let sorted = encounter.initiative.sorted(by: >)
-        return Array(sorted[currentIndex..<sorted.count] + sorted[0..<currentIndex])
+        self.currentInitiativeOrder = encounter.initiative
     }
     
     func advanceInitiative() {
-        currentIndex = (currentIndex + 1) % encounter.initiative.count
+        encounter.currentIndex = (encounter.currentIndex + 1) % encounter.initiative.count
+        updateInitiativeOrder()
     }
     
     func rollbackInitiative() {
-        currentIndex = (currentIndex - 1 >= 0 ? currentIndex - 1 : encounter.initiative.count - 1)
+        encounter.currentIndex = (encounter.currentIndex - 1 >= 0 ? encounter.currentIndex - 1 : encounter.initiative.count - 1)
+        updateInitiativeOrder()
+    }
+    
+    func moveInitiative(_ from: Int, toPosition: Int) {
+        guard from < encounter.initiative.count && toPosition < encounter.initiative.count else { return }
+        
+        encounter.initiative[from].initiative = encounter.initiative[toPosition].initiative - 1
+        updateInitiativeOrder()
+    }
+    
+    func updateInitiativeOrder() {
+        let sorted = encounter.initiative.sorted(by: >)
+        encounter.initiative = Array(sorted[encounter.currentIndex..<sorted.count] + sorted[0..<encounter.currentIndex])
+        currentInitiativeOrder = encounter.initiative
     }
 }

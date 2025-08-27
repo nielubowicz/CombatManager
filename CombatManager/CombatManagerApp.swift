@@ -30,7 +30,7 @@ struct CombatManagerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            EncounterList()
         }
         .modelContainer(sharedModelContainer)
     }
@@ -40,5 +40,6 @@ struct CombatManagerApp: App {
 // TODO: Add DocumentGroup support for the ability to share encounters
 // TODO: Consider giving each encounter (??) a model container
 // TODO: Figure out how to display an individual record via a property-wrapper or similar
+// TODO: Change CombatEncounter display into a grid
 
 // ******* ******* ******* ******* *******

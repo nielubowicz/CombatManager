@@ -37,8 +37,7 @@ class SampleData {
         do {
             modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
             insertSampleData()
-
-            print(context.insertedModelsArray)
+            
             try context.save()
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
@@ -46,9 +45,9 @@ class SampleData {
     }
 
     private func insertSampleData() {
-        for character in [PlayerCharacter.mock(), PlayerCharacter.mock(), PlayerCharacter.mock()] {
-            context.insert(character)
-        }
+        context.insert(PlayerCharacter.mock(name: "Abe the Able"))
+        context.insert(PlayerCharacter.mock(name: "Billy the Bold"))
+        context.insert(PlayerCharacter.mock(name: "Charles the Charming"))
         
         let encounter = Encounter.mock(name: EncounterNames.base)
         context.insert(encounter)

@@ -11,7 +11,13 @@ import SwiftData
 struct CombatEncounter: View {
     @Environment(\.modelContext) var modelContext
     
-    @StateObject var viewModel: CombatEncounterViewModel
+    @Bindable var encounter: Encounter
+    @ObservedObject private var viewModel: CombatEncounterViewModel
+    
+    init(encounter: Encounter) {
+        self.encounter = encounter
+        self.viewModel = CombatEncounterViewModel(encounter: encounter)
+    }
     
     var body: some View {
         List {
@@ -24,7 +30,13 @@ struct CombatEncounter: View {
                 }
             }
             .onMove { from, to in
-                viewModel.encounter.initiative[from.first!].initiative = viewModel.encounter.initiative[to].initiative - 1
+                /*
+                 TODO: Figure out how to solve the case where pushing initiative causes
+                    a conflict at the new (destination.initiative - 1) point
+                 */
+                print(viewModel.encounter.initiative.map { $0.character.name })
+                viewModel.moveInitiative(from.first!, toPosition: to - 1)
+                print(viewModel.encounter.initiative.map { $0.character.name })
                 do {
                     try modelContext.save()
                 } catch {
@@ -32,7 +44,7 @@ struct CombatEncounter: View {
                 }
             }
         }
-        .navigationTitle(viewModel.title)
+        .navigationTitle(viewModel.encounter.name)
         .toolbar {
             ToolbarItem(placement: .bottomBar) {
                 EditButton()
@@ -58,7 +70,9 @@ struct CombatEncounter: View {
                 }
             }
         }
-        // TODO: Fix display into a grid ?
+        .task {
+            viewModel.updateInitiativeOrder()
+        }
     }
 }
 
@@ -67,19 +81,15 @@ struct CombatEncounter: View {
     let predicate = #Predicate<Encounter> { $0.name == "Encounter" }
     let descriptor = FetchDescriptor(predicate: predicate)
     let encounters = try! context.fetch(descriptor)
-    CombatEncounter(
-        viewModel: CombatEncounterViewModel(encounter: encounters.first!)
-    )
+    CombatEncounter(encounter: encounters.first!)
         .modelContainer(SampleData.shared.modelContainer)
 }
 
 #Preview("contested initiative") {
     let context = SampleData.shared.modelContainer.mainContext
-    let encounters = try! context.fetch(
-        FetchDescriptor(predicate: #Predicate<Encounter> { $0.name == "Contested Initiative Encounter" })
-    )
-    CombatEncounter(
-        viewModel: CombatEncounterViewModel(encounter: encounters.first!)
-    )
-    .modelContainer(SampleData.shared.modelContainer)
+    let predicate = #Predicate<Encounter> { $0.name == "Contested Initiative Encounter" }
+    let descriptor = FetchDescriptor(predicate: predicate)
+    let encounters = try! context.fetch(descriptor)
+    CombatEncounter(encounter: encounters.first!)
+        .modelContainer(SampleData.shared.modelContainer)
 }
