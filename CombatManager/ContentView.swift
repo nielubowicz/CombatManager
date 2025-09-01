@@ -12,11 +12,11 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
 
     var body: some View {
-            Text("Select an item")
+        EncounterList()
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: PlayerCharacter.self, inMemory: true)
+        .modelContainer(SampleData.shared.modelContainer)
 }

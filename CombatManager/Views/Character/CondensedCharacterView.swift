@@ -11,82 +11,75 @@ struct CondensedCharacterView: View {
     @Environment(\.modelContext) private var modelContext
     
     @State var character: PlayerCharacter
+    @State var showStatuses: Bool = false
+    
+    @Namespace private var namespace
     
     var body: some View {
-        VStack {
-            HStack {
-                //            Image()
-                //                .padding(24)
-                //                .glassEffect()
-                            
-                Text(character.name)
-                    .font(.title)
-                    .padding()
-            }
-            Spacer()
-            
-            HStack {
+        Button {
+            showStatuses.toggle()
+        } label: {
+            VStack {
                 HStack {
-                    Button {
-                        
-                    } label: {
-                        Text(character.health.current, format: .number)
-                    }
-                    Button {
-                        
-                    } label: {
-                        Text(character.health.max, format: .number)
-                    }
-                }
-                .padding()
-                .glassEffect()
-                Spacer()
-                HStack {
-                    Button {
-                        
-                    } label: {
-                        Text(character.saves.will, format: .number)
-                            .padding()
-                            .overlay(alignment: .topTrailing) {
-                                Image(systemName: "brain")
-                            }
-                            .glassEffect()
-                    }
-                    Button {
-                        
-                    } label: {
-                        Text(character.saves.fortitude, format: .number)
-                            .padding()
-                            .overlay(alignment: .topTrailing) {
-                                Image(systemName: "shield.slash")
-                            }
-                            .glassEffect()
-                    }
-                    Button {
-                        
-                    } label: {
-                        Text(character.saves.reflex, format: .number)
-                            .padding()
-                            .overlay(alignment: .topTrailing) {
-                                Image(systemName: "wind")
-                            }
-                            .glassEffect()
-                    }
-                    
-                }
-                Spacer()
-                Button {
-                    
-                } label: {
-                    Text(character.armor.AC, format: .number)
-                        .padding()
-                        .overlay(alignment: .topTrailing) {
-                            Image(systemName: "shield")
-                        }
+                    Image(systemName: "cat")
+                        .padding(24)
                         .glassEffect()
+                    
+                    Text(character.name)
+                        .font(.title)
+                        .padding()
                 }
+                Spacer()
+                
+                HStack {
+                    GlassEffectContainer {
+                        Button {
+                            
+                        } label: {
+                            Text(character.health.current, format: .number)
+                                .padding()
+                        }
+                        .buttonStyle(.glass)
+                        Button {
+                            
+                        } label: {
+                            Text(character.health.max, format: .number)
+                                .padding()
+                        }
+                        .buttonStyle(.glass)
+                    }
+                    .glassEffectUnion(id: 1, namespace: namespace)
+                    Spacer()
+                    saves
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        Text(character.armor.AC, format: .number)
+                            .padding()
+                            .overlay(alignment: .topTrailing) {
+                                Image(systemName: "shield")
+                            }
+                    }
+                    .buttonStyle(.glass)
+                }
+                
+                statusList
             }
-            
+            .padding()
+            .clipShape(.rect(cornerRadius: 24))
+            .overlay {
+                ConcentricRectangle()
+                    .stroke(.red, style: StrokeStyle(lineWidth: 4))
+            }
+            .padding()
+        }
+
+    }
+    
+    @ViewBuilder
+    private var statusList: some View {
+        if showStatuses {
             Spacer()
             
             List(character.notes, id: \.self) { note in
@@ -101,15 +94,43 @@ struct CondensedCharacterView: View {
                 }
             }
         }
-        .padding()
-        .clipShape(.rect(cornerRadius: 24))
-        .overlay {
-            ConcentricRectangle()
-                .stroke(.red, style: StrokeStyle(lineWidth: 4))
-        }
-        .padding()
-
     }
+    
+    @ViewBuilder
+    private var saves: some View {
+        GlassEffectContainer(spacing: 44) {
+            Button {
+                
+            } label: {
+                Text(character.saves.will, format: .number)
+                    .padding()
+                    .overlay(alignment: .topTrailing) {
+                        Image(systemName: "brain")
+                    }
+            }
+            Button {
+                
+            } label: {
+                Text(character.saves.fortitude, format: .number)
+                    .padding()
+                    .overlay(alignment: .topTrailing) {
+                        Image(systemName: "shield.slash")
+                    }
+            }
+            Button {
+                
+            } label: {
+                Text(character.saves.reflex, format: .number)
+                    .padding()
+                    .overlay(alignment: .topTrailing) {
+                        Image(systemName: "wind")
+                    }
+            }
+        }
+        .buttonStyle(.glass)
+        
+    }
+    
 }
 
 #Preview {

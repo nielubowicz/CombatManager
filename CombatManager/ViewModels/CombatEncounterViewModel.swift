@@ -9,12 +9,12 @@ import Combine
 import SwiftUI
 
 class CombatEncounterViewModel: ObservableObject {
-    @Bindable var encounter: Encounter
+    var encounter: Encounter
     @Published var currentInitiativeOrder: [InitiativeOrder]
     
     init(encounter: Encounter) {
         self.encounter = encounter
-        self.currentInitiativeOrder = encounter.initiative
+        self.currentInitiativeOrder = encounter.initiative.sorted(by: >)
     }
     
     func advanceInitiative() {
@@ -29,14 +29,14 @@ class CombatEncounterViewModel: ObservableObject {
     
     func moveInitiative(_ from: Int, toPosition: Int) {
         guard from < encounter.initiative.count && toPosition < encounter.initiative.count else { return }
-        
-        encounter.initiative[from].initiative = encounter.initiative[toPosition].initiative - 1
+        print("moving from \(from) to \(toPosition)")
+        currentInitiativeOrder[from].initiative = currentInitiativeOrder[toPosition].initiative - 1
         updateInitiativeOrder()
     }
     
     func updateInitiativeOrder() {
         let sorted = encounter.initiative.sorted(by: >)
-        encounter.initiative = Array(sorted[encounter.currentIndex..<sorted.count] + sorted[0..<encounter.currentIndex])
-        currentInitiativeOrder = encounter.initiative
+        currentInitiativeOrder = Array(sorted[encounter.currentIndex..<sorted.count] + sorted[0..<encounter.currentIndex])
+        print(currentInitiativeOrder.map { ($0.initiative, $0.character.name) })
     }
 }

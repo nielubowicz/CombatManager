@@ -12,21 +12,28 @@ struct EncounterList: View {
     @Environment(\.modelContext) var modelContext
     
     @Query var encounters: [Encounter]
+    @State var selectedEncounters = Set<Encounter>()
+    @State var selectedEncounter: Encounter? = nil
     
     var body: some View {
-        NavigationStack {
-            List(encounters) { encounter in
-                NavigationLink {
-                    CombatEncounter(encounter: encounter)
-                } label: {
-                    HStack {
-                        Text(encounter.name)
-                            .font(.headline)
-                        Text(encounter.initiative.prefix(3).map{ $0.character.name }.joined(separator: ", "))
-                    }
+        NavigationSplitView {
+            List(encounters, id: \.self, selection: $selectedEncounters) { encounter in
+                VStack(alignment: .leading) {
+                    Text(encounter.name)
+                        .font(.headline)
+                    Text(encounter.initiative.prefix(3).map{ $0.character.name }.joined(separator: ", "))
+                        .font(.caption)
                 }
             }
+            .listStyle(.sidebar)
+        } detail: {
+            if let encounter = selectedEncounters.first {
+                CombatEncounter(encounter: encounter)
+            } else {
+                ContentUnavailableView("Select an Encounter", image: "magnifying.glass")
+            }
         }
+        .navigationTitle("Encounters")
     }
 }
 

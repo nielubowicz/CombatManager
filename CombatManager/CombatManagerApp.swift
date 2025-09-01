@@ -30,7 +30,7 @@ struct CombatManagerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            EncounterList()
+            ContentView()
         }
         .modelContainer(sharedModelContainer)
     }

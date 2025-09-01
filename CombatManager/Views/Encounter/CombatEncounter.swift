@@ -11,17 +11,15 @@ import SwiftData
 struct CombatEncounter: View {
     @Environment(\.modelContext) var modelContext
     
-    @Bindable var encounter: Encounter
     @ObservedObject private var viewModel: CombatEncounterViewModel
     
     init(encounter: Encounter) {
-        self.encounter = encounter
         self.viewModel = CombatEncounterViewModel(encounter: encounter)
     }
     
     var body: some View {
         List {
-            ForEach(viewModel.currentInitiativeOrder) { initiativeOrder in
+            ForEach(viewModel.currentInitiativeOrder, id: \.persistentModelID) { initiativeOrder in
                 HStack {
                     Text(initiativeOrder.initiative, format: .number)
                         .font(.title)
@@ -69,9 +67,6 @@ struct CombatEncounter: View {
                         .padding()
                 }
             }
-        }
-        .task {
-            viewModel.updateInitiativeOrder()
         }
     }
 }
