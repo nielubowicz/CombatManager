@@ -21,7 +21,7 @@ struct EncounterList: View {
                 VStack(alignment: .leading) {
                     Text(encounter.name)
                         .font(.headline)
-                    Text(encounter.initiative.prefix(3).map{ $0.character.name }.joined(separator: ", "))
+                    Text(encounter.unwrappedInitiative.prefix(3).map{ $0.unwrappedCharacter.name }.joined(separator: ", "))
                         .font(.caption)
                 }
             }

@@ -9,9 +9,11 @@ import SwiftData
 
 @Model
 final class HitPoints {
-    var current: Int
-    var max: Int
-    var temporary: Int
+    var current: Int = 10
+    var max: Int = 10
+    var temporary: Int = 10
+    
+    @Relationship(inverse: \PlayerCharacter.health) var player: PlayerCharacter?
     
     init(current: Int, max: Int, temporary: Int) {
         self.current = current

@@ -9,7 +9,9 @@ import SwiftData
 
 @Model
 final class Armor {
-    var AC: Int
+    var AC: Int = 10
+    
+    @Relationship(inverse: \PlayerCharacter.armor) var player: PlayerCharacter?
     
     init(AC: Int) {
         self.AC = AC
@@ -18,7 +20,7 @@ final class Armor {
 
 extension Armor: Previewable {
     static func mock(
-        AC: Int = 13
+        AC: Int = 10
     ) -> Armor {
         Armor(AC: AC)
     }

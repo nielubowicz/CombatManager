@@ -9,14 +9,18 @@ import SwiftData
 
 @Model
 final class Encounter {
-    @Attribute(.unique) var name: String
-    var initiative: [InitiativeOrder] = []
+    var name: String = "Encounter"
+    var initiative: [InitiativeOrder]? = []
     var currentIndex = 0
     
     init(name: String, initiative: [InitiativeOrder], currentIndex: Int = 0) {
         self.name = name
         self.initiative = initiative
         self.currentIndex = currentIndex
+    }
+    
+    var unwrappedInitiative: [InitiativeOrder] {
+        initiative ?? []
     }
 }
 

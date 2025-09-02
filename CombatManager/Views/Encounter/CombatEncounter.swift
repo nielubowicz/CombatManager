@@ -24,7 +24,7 @@ struct CombatEncounter: View {
                     Text(initiativeOrder.initiative, format: .number)
                         .font(.title)
                         .glassEffect()
-                    CondensedCharacterView(character: initiativeOrder.character)
+                    CondensedCharacterView(character: initiativeOrder.unwrappedCharacter)
                 }
             }
             .onMove { from, to in
@@ -32,9 +32,9 @@ struct CombatEncounter: View {
                  TODO: Figure out how to solve the case where pushing initiative causes
                     a conflict at the new (destination.initiative - 1) point
                  */
-                print(viewModel.encounter.initiative.map { $0.character.name })
+                print(viewModel.encounter.unwrappedInitiative.map { $0.unwrappedCharacter.name })
                 viewModel.moveInitiative(from.first!, toPosition: to - 1)
-                print(viewModel.encounter.initiative.map { $0.character.name })
+                print(viewModel.encounter.unwrappedInitiative.map { $0.unwrappedCharacter.name })
                 do {
                     try modelContext.save()
                 } catch {

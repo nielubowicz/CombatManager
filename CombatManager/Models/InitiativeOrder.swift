@@ -9,12 +9,17 @@ import SwiftData
 
 @Model
 final class InitiativeOrder {
-    var character: PlayerCharacter
-    var initiative: Int
+    var character: PlayerCharacter?
+    var initiative: Int = 10
+    @Relationship(inverse: \Encounter.initiative) var encounter: Encounter?
     
     init(character: PlayerCharacter, initiative: Int) {
         self.character = character
         self.initiative = initiative
+    }
+    
+    var unwrappedCharacter: PlayerCharacter {
+        character ?? PlayerCharacter.mock()
     }
 }
 
@@ -29,7 +34,7 @@ extension InitiativeOrder: Comparable {
         // and GM decides between player and GM-controlled characters.
         // In this case, it may be easier to just adjust the initiative score per character!
         lhs.initiative < rhs.initiative ||
-        (lhs.initiative == rhs.initiative ? lhs.character.saves.reflex < rhs.character.saves.reflex : false)
+        (lhs.initiative == rhs.initiative ? lhs.unwrappedCharacter.unwrappedSave.reflex < rhs.unwrappedCharacter.unwrappedSave.reflex : false)
     }
 }
 

@@ -36,14 +36,14 @@ struct CondensedCharacterView: View {
                         Button {
                             
                         } label: {
-                            Text(character.health.current, format: .number)
+                            Text(character.unwrappedHealth.current, format: .number)
                                 .padding()
                         }
                         .buttonStyle(.glass)
                         Button {
                             
                         } label: {
-                            Text(character.health.max, format: .number)
+                            Text(character.unwrappedHealth.max, format: .number)
                                 .padding()
                         }
                         .buttonStyle(.glass)
@@ -55,7 +55,7 @@ struct CondensedCharacterView: View {
                     Button {
                         
                     } label: {
-                        Text(character.armor.AC, format: .number)
+                        Text(character.unwrappedArmor.AC, format: .number)
                             .padding()
                             .overlay(alignment: .topTrailing) {
                                 Image(systemName: "shield")
@@ -83,7 +83,7 @@ struct CondensedCharacterView: View {
             Spacer()
             
             List(character.notes, id: \.self) { note in
-                Text(note)
+                Text(note.content)
             }
             .overlay(alignment: .bottomTrailing) {
                 Button {
@@ -102,7 +102,7 @@ struct CondensedCharacterView: View {
             Button {
                 
             } label: {
-                Text(character.saves.will, format: .number)
+                Text(character.unwrappedSave.will, format: .number)
                     .padding()
                     .overlay(alignment: .topTrailing) {
                         Image(systemName: "brain")
@@ -111,7 +111,7 @@ struct CondensedCharacterView: View {
             Button {
                 
             } label: {
-                Text(character.saves.fortitude, format: .number)
+                Text(character.unwrappedSave.fortitude, format: .number)
                     .padding()
                     .overlay(alignment: .topTrailing) {
                         Image(systemName: "shield.slash")
@@ -120,7 +120,7 @@ struct CondensedCharacterView: View {
             Button {
                 
             } label: {
-                Text(character.saves.reflex, format: .number)
+                Text(character.unwrappedSave.reflex, format: .number)
                     .padding()
                     .overlay(alignment: .topTrailing) {
                         Image(systemName: "wind")
