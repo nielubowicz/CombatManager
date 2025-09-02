@@ -14,7 +14,8 @@ class CombatEncounterViewModel: ObservableObject {
     
     init(encounter: Encounter) {
         self.encounter = encounter
-        self.currentInitiativeOrder = encounter.unwrappedInitiative.sorted(by: >)
+        let sorted = encounter.unwrappedInitiative.sorted(by: >)
+        self.currentInitiativeOrder = Array(sorted[encounter.currentIndex..<sorted.count] + sorted[0..<encounter.currentIndex])
     }
     
     func advanceInitiative() {
